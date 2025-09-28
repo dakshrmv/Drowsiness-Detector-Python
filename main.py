@@ -23,7 +23,6 @@ class DrowsinessDetector:
         except Exception as e:
             print(f"🔥 Firebase initialization failed: {e}")
             self.db = None
-
         self.ear_thresh = 0.25
         self.mar_thresh = 0.30
         self.closed_eye_duration = 0.8
@@ -32,7 +31,6 @@ class DrowsinessDetector:
         self.fatigue_level = 0
         self.warning_lvl = 4
         self.alert_lvl = 8
-
         self.mp_face_mesh = mp.solutions.face_mesh
         self.face_mesh = self.mp_face_mesh.FaceMesh(
             max_num_faces=1,
@@ -40,17 +38,14 @@ class DrowsinessDetector:
             min_detection_confidence=0.5,
             min_tracking_confidence=0.5
         )
-
         self.LEFT_EYE = [362, 385, 387, 263, 373, 380]
         self.RIGHT_EYE = [33, 160, 158, 133, 153, 144]
         self.MOUTH = [13, 14, 78, 308]
         self.NOSE = 1
-
         self.eye_closed_start = None
         self.yawn_start = None
         self.distraction_start = None
         self.last_decay = time.time()
-
         self.ss_dir = "screenshots_log"
         os.makedirs(self.ss_dir, exist_ok=True)
         self.last_ss_time = 0
@@ -60,7 +55,6 @@ class DrowsinessDetector:
         self.last_firebase_alert_time = 0
         self.firebase_alert_cooldown = 15
         self.tts_engine = pyttsx3.init()
-
         self.model_points = np.array([
             (0.0, 0.0, 0.0),
             (0.0, -330.0, -65.0),
@@ -227,9 +221,7 @@ class DrowsinessDetector:
             yaw, pitch, roll, nose_end, nose_start = self.get_head_pose(landmarks, (h, w))
             cv2.putText(frame, f"Yaw: {yaw:.2f}", (500, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 2)
             cv2.putText(frame, f"Pitch: {pitch:.2f}", (500, 60), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 2)
-            
             is_attentive = not (yaw > 25 or yaw < -25 or pitch > 20 or pitch < -25)
-            
             if is_attentive:
                 self.distraction_start = None
                 ear = (self.get_ear(landmarks, self.LEFT_EYE) + self.get_ear(landmarks, self.RIGHT_EYE)) / 2.0
@@ -262,7 +254,6 @@ class DrowsinessDetector:
                     color = (0, 0, 255)
                     self.play_voice_alert("Pay Attention")
                     self.distraction_start = time.time()
-                    
         cv2.putText(frame, f"Fatigue: {self.fatigue_level}", (10, 90), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 2)
         if self.fatigue_level >= self.alert_lvl:
             status = "ALERT! DROWSY!"
@@ -279,17 +270,10 @@ class DrowsinessDetector:
         return frame
 
 def main():
-    ip = "192.168.29.248"
-    port = "4747"
-    url = f"http://{ip}:{port}/video"
-    cap = cv2.VideoCapture(url)
+    cap = cv2.VideoCapture(0)
     if not cap.isOpened():
-        print("Error: Could not open DroidCam stream. Trying default camera...")
-        cap = cv2.VideoCapture(0)
-        if not cap.isOpened():
-            print("Error: Could not open default camera either.")
-            return
-
+        print("Error: Could not open system camera.")
+        return
     detector = DrowsinessDetector()
     detector.calibrate(cap)
     while True:
