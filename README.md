@@ -1,38 +1,83 @@
+🚗 Drowsiness Detection System
 
-# Drowsiness Detection System
+A real-time driver drowsiness and distraction detection system built with Python, OpenCV, and MediaPipe.
+The system continuously monitors a driver’s facial landmarks to detect early signs of fatigue or distraction and sends real-time alerts to a Firebase-powered dashboard.
 
-A real-time driver drowsiness and distraction detection system built with Python, OpenCV, and MediaPipe. The system monitors a driver's facial landmarks to detect signs of fatigue and sends alerts to a Firebase-powered dashboard.
+✨ Features
 
-## ✨ Features
+👁️ Real-Time Drowsiness Detection: Calculates Eye Aspect Ratio (EAR) to detect closed or drooping eyes.
 
-- **Real-Time Drowsiness Detection:** Monitors Eye Aspect Ratio (EAR) to detect closed eyes.
-- **Yawn Detection:** Monitors Mouth Aspect Ratio (MAR) to identify yawns.
-- **Distraction Detection:** Uses head pose estimation to check if the driver is looking away from the road.
-- **Fatigue Score:** Calculates a cumulative fatigue level based on events.
-- **Firebase Integration:** Sends real-time SOS alerts with GPS coordinates to a Flutter dashboard app.
-- **Audible Alerts:** Plays warning sounds and voice alerts ("Wake up," "Pay Attention").
+😮 Yawn Detection: Uses Mouth Aspect Ratio (MAR) to identify yawning patterns.
 
-## ⚙️ Setup
+🧭 Distraction Detection: Estimates head pose to check if the driver is looking away from the road.
 
-To run this project, you need to set up the Python environment and Firebase.
+📊 Fatigue Scoring: Computes a cumulative fatigue index using weighted event tracking.
 
-1.  **Clone the repository:**
-    `git clone <your-repository-url>`
+☁️ Firebase Integration: Sends real-time SOS alerts and GPS coordinates to a Flutter-based dashboard app.
 
-2.  **Install the required libraries:**
-    `pip install -r requirements.txt` 
-    *(Note: You will need to create a `requirements.txt` file for this to work)*
+🔊 Audible Alerts: Plays warning tones and voice prompts such as “Wake up” or “Pay attention.”
 
-3.  **Set up Firebase:**
-    - Create a Firebase project in the Firebase Console.
-    - Go to Project Settings > Service accounts.
-    - Click "Generate new private key" to download your `serviceAccountKey.json` file.
-    - **Important:** Place this file in the project's root directory but do not commit it to Git. The `.gitignore` file is already configured to ignore it.
+⚙️ Setup
+1️⃣ Clone this repository
+git clone <your-repository-url>
 
-## ▶️ How to Run
+2️⃣ Install dependencies
+pip install -r requirements.txt
 
-1.  Make sure your webcam or DroidCam stream is active.
-2.  Run the main Python script from your terminal:
-    `python main.py`
 
-The application will start, calibrate, and begin monitoring. Press 'q' to quit the program.
+(Ensure that requirements.txt lists all necessary libraries — OpenCV, Mediapipe, Firebase Admin SDK, etc.)
+
+3️⃣ Configure Firebase
+
+Create a new Firebase project in the Firebase Console
+.
+
+Go to Project Settings → Service Accounts.
+
+Click “Generate new private key” and download the serviceAccountKey.json file.
+
+Place it in the project’s root directory.
+(This file is already ignored by .gitignore for security.)
+
+▶️ Run the System
+
+Ensure your webcam (or DroidCam stream) is active.
+Then run:
+
+python main.py
+
+
+The program will start calibrating automatically and display live detection results.
+Press ‘q’ to safely exit the system.
+
+🧠 Tech Stack
+
+Language: Python
+
+Libraries: OpenCV, Mediapipe, NumPy, PyAudio, Firebase Admin SDK
+
+Cloud Backend: Firebase Realtime Database
+
+Front-End Dashboard: Flutter (companion app)
+
+Deployment Target: Desktop / Laptop
+
+🧩 Future Improvements
+
+Integration of ML-based fatigue classification model.
+
+Adaptive alert threshold based on driver profile.
+
+Cloud synchronization of driver logs and performance.
+
+🏷️ Authorship & License
+
+Developed and maintained by Daksh Sharma
+ (2025).
+This project was originally designed, implemented, and published by Daksh Sharma as part of AI-driven road safety research and hackathon development work.
+
+Licensed under the MIT License
+.
+Any derivative or adapted work must include proper credit to the original author.
+
+⭐ Star this repo if you find it useful or want to follow its future AI-based fatigue detection upgrades.
