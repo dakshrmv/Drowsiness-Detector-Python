@@ -1,0 +1,6 @@
+opencv-python
+mediapipe
+firebase-admin
+pyttsx3
+whereami
+numpy
